@@ -1,0 +1,60 @@
+﻿@page
+@model FlexConMan_Monolith.Pages.Rooms.IndexModel
+
+@{
+    ViewData["Title"] = "Rooms";
+    var isUser = User.IsInRole("USER");
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!isUser)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Room[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Room[0].NumberOfSeats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Room[0].ConferenceCenter)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Room) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfSeats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConferenceCenter.City)
+            </td>
+            <td>
+                @if (!isUser)
+                {
+                    <a asp-page="./Edit" asp-route-id="@item.RoomId">Edit</a> @:|
+                }
+                <a asp-page = "./Details" asp-route-id = "@item.RoomId" > Details </a>
+                @if (!isUser)
+                {
+                    @: |
+                    <a asp-page = "./Delete" asp-route-id = "@item.RoomId" > Delete </a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

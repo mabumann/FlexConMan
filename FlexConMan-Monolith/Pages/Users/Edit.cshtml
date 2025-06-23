@@ -1,0 +1,67 @@
+﻿@page
+@model FlexConMan_Monolith.Pages.Users.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EditUser.Id" />
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EditUser.UserName" class="control-label"></label>
+                <input asp-for="EditUser.UserName" class="form-control" />
+                <span asp-validation-for="EditUser.UserName" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                ●●●●●●●●●●
+                <a asp-page="./ChangePassword" asp-route-id="@Model.EditUser.Id" class="btn btn-warning">Change Password</a>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EditUser.Email" class="control-label"></label>
+                <input asp-for="EditUser.Email" class="form-control" />
+                <span asp-validation-for="EditUser.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EditUser.Name" class="control-label"></label>
+                <input asp-for="EditUser.Name" class="form-control" />
+                <span asp-validation-for="EditUser.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="EditUser.Firstname" class="control-label"></label>
+                <input asp-for="EditUser.Firstname" class="form-control" />
+                <span asp-validation-for="EditUser.Firstname" class="text-danger"></span>
+            </div>
+            @if (Model.CanEditRole)
+            {
+                <div class="form-group">
+                    <span class="text-danger">*</span>
+                    <label asp-for="SelectedRole" class="control-label"></label>
+                    <select asp-for="SelectedRole" class="form-control" asp-items="Model.Roles"></select>
+                    <span asp-validation-for="SelectedRole" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,19 @@
+﻿@page
+@model FlexConMan_Monolith.Pages.Users.ManageRolesModel
+@{
+    ViewData["Title"] = "Manage User Roles";
+}
+
+<h2>Manager User Roles</h2>
+
+<form method="post">
+    <div>
+        <label>User:</label>
+        <select asp-for="SelectedUserId" asp-items="@(new SelectList(Model.Users, "Id", "UserName"))"></select>"
+    </div>
+    <div>
+        <label>Role:</label>
+        <select asp-for="SelectedRole" asp-items="@(new SelectList(Model.Roles))"></select>
+    </div>
+    <button type="submit">Assign Role</button>
+</form>

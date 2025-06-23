@@ -1,0 +1,54 @@
+﻿@page
+@model FlexConMan_Monolith.Pages.Presentations.IndexModel
+
+@{
+    ViewData["Title"] = "Presentations";
+    var isUser = User.IsInRole("USER");
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!isUser)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Presentation[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Presentation[0].Speaker)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Presentation) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Speaker)
+            </td>
+            <td>
+                @if (!isUser)
+                {
+                    <a asp-page="./Edit" asp-route-id="@item.PreId">Edit</a> @:|
+                }
+                <a asp-page = "./Details" asp-route-id = "@item.PreId" > Details </a>
+                @if (!isUser)
+                {
+                    @: |
+                    <a asp-page = "./Delete" asp-route-id = "@item.PreId" > Delete </a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

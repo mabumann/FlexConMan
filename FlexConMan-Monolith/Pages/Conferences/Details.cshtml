@@ -1,0 +1,110 @@
+﻿@page
+@model FlexConMan_Monolith.Pages.Conferences.DetailsModel
+
+@{
+    ViewData["Title"] = "Conference Details";
+    var isUser = User.IsInRole("USER");
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Conference</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Conference.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Conference.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Conference.DateFrom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Conference.DateFrom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Conference.DateTo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Conference.DateTo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Conference.ConferenceCenter)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Conference.ConferenceCenter.City)
+        </dd>
+    </dl>
+</div>
+<div>
+@if (Model.Conference.Sessions != null && Model.Conference.Sessions.Any())
+{
+    <h4>Sessions</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            @* <th>Session ID</th> *@
+            <th>Date/Time</th>
+            <th>Room</th>
+            <th>Presentation</th>
+            <th>Speaker</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var session in Model.Conference.Sessions)
+        {
+            <tr>
+                <td>@session.Datetime?.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@session.Room?.Name</td>
+                <td>
+                    <a asp-page="/Sessions/Details" asp-route-id="@session.SessionId">
+                        @session.Presentation?.Title
+                    </a>
+                </td>
+                <td>@session.Presentation?.Speaker</td>
+                @{
+                    var userTickets = Model.GetUserTicketCount(session.SessionId);
+                }
+                <td>
+                    @if (User.IsInRole("USER"))
+                    {
+                        if (userTickets == 0)
+                        {
+                            <form method="post" asp-page-handler="Buy">
+                                <input type="hidden" name="SessionId" value="@session.SessionId"/>
+                                <input type="number" name="TicketCount" min="1" max="@session.Contingent.RemainingOnlineQuota" value="1"/>
+                                <button type="submit" class="btn btn-primary">Buy</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-page="/Tickets/Index">You already have @userTickets tickets</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No sessions assigned to this conference.</p>
+}
+</div>
+<div>
+    @if (!isUser)
+    {
+        @if (Model.Conference != null)
+        {
+            <a asp-page="./Edit" asp-route-id="@Model.Conference.ConferenceId">Edit</a> @:|
+        }
+        else
+        {
+            <span>No conference details available.</span> @:|
+        }
+    }
+    <a asp-page="./Index">Back to List</a>
+</div>

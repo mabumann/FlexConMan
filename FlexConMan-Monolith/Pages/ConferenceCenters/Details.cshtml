@@ -1,0 +1,81 @@
+﻿@page
+@model FlexConMan_Monolith.Pages.ConferenceCenters.DetailsModel
+
+@{
+    ViewData["Title"] = "Conference Center Details";
+    var isUser = User.IsInRole("USER");
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ConferenceCenter</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ConferenceCenter.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ConferenceCenter.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ConferenceCenter.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ConferenceCenter.City)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ConferenceCenter.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ConferenceCenter.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Model.Conferences != null && Model.Conferences.Any())
+    {
+        <h4>Conferences</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date From</th>
+                <th>Date To</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var conference in Model.Conferences)
+            {
+                <tr>
+                    <td>@conference.Name</td>
+                    <td>@conference.DateFrom?.ToString("dd.MM.yyyy") ?? ""</td>
+                    <td>@conference.DateTo?.ToString("dd.MM.yyyy") ?? ""</td>
+                    <td>
+                        <a asp-page="/Conferences/Details" asp-route-id="@conference.ConferenceId">Details</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No conferences assigned to this conference center.</p>
+    }
+</div>
+<div>
+    @if (!isUser)
+    {
+        @if (Model.ConferenceCenter != null)
+        {
+            <a asp-page="./Edit" asp-route-id="@Model.ConferenceCenter.CcId">Edit</a> @:|
+        }
+        else
+        {
+            <span>No conference center details available.</span> @:|
+        }
+    }
+    <a asp-page="./Index">Back to List</a>
+</div>

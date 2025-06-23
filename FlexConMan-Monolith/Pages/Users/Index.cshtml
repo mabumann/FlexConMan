@@ -1,0 +1,65 @@
+﻿@page
+@model FlexConMan_Monolith.Pages.Users.IndexModel
+
+@{
+    ViewData["Title"] = "Users";
+    var isUser = User.IsInRole("USER");
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!isUser)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].User.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].User.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].User.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].User.Firstname)
+            </th>
+            <th>
+                Role
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Users) {
+        <tr>
+            <td>
+                @item.User.UserName
+            </td>
+            <td>
+                @item.User.Email
+            </td>
+            <td>
+                @item.User.Name
+            </td>
+            <td>
+                @item.User.Firstname
+            </td>
+            <td>
+                @(item.Roles.Any() ? string.Join(", ", item.Roles) : "No role")
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.User.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.User.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.User.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,75 @@
+﻿@page
+@model FlexConMan_Monolith.Pages.Conferences.IndexModel
+
+@{
+    ViewData["Title"] = "Conferences";
+    var isUser = User.IsInRole("USER");
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!isUser)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Conference[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Conference[0].DateFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Conference[0].DateTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Conference[0].ConferenceCenter)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Conference) {
+        <tr>
+            <td>
+                @if (isUser)
+                {
+                    <a asp-page="./Details" asp-route-id="@item.ConferenceId">@item.Name</a>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Name)
+                }
+            </td>
+            <td>
+                @(item.DateFrom?.ToString("dd.MM.yyyy"))
+                @* @Html.DisplayFor(modelItem => item.DateFrom) *@
+            </td>
+            <td>
+                @(item.DateTo?.ToString("dd.MM.yyyy"))
+                @* @Html.DisplayFor(modelItem => item.DateTo) *@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConferenceCenter.City)
+            </td>
+            <td>
+                @if (!isUser)
+                {
+                    <a asp-page="./Edit" asp-route-id="@item.ConferenceId">Edit</a> @:|
+                }
+                <a asp-page = "./Details" asp-route-id = "@item.ConferenceId" > Details </a>
+                @if (!isUser)
+                {
+                    @: |
+                    <a asp-page = "./Delete" asp-route-id = "@item.ConferenceId" > Delete </a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,55 @@
+﻿@page
+@model FlexConMan_Monolith.Pages.Tickets.IndexModel
+
+@{
+    ViewData["Title"] = "Tickets";
+    var isUser = User.IsInRole("USER");
+
+    var groupedTickets = Model.Ticket
+        .GroupBy(t => new
+        {
+            t.User.Email, 
+            ConferenceName = t.Session.Conference.Name,
+            PresentationTitle = t.Session.Presentation.Title
+
+        })
+        .Select(g => new {
+            UserEmail = g.Key.Email,
+            ConferenceName = g.Key.ConferenceName,
+            PresentationTitle = g.Key.PresentationTitle,
+            Count = g.Count()
+        })
+        .ToList();
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@* @if (!isUser)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+ *@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].User)
+            </th>
+            <th>Conference</th>
+            <th>Presentation</th>
+            <th>Ticket Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in groupedTickets) {
+            <tr>
+                <td>@item.UserEmail</td>
+                <td>@item.ConferenceName</td>
+                <td>@item.PresentationTitle</td>
+                <td>@item.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>

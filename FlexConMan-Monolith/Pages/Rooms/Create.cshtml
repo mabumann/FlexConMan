@@ -1,0 +1,51 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model FlexConMan_Monolith.Pages.Rooms.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Room</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Room.RoomId" class="control-label"></label>
+                <input asp-for="Room.RoomId" class="form-control"/>
+                <span asp-validation-for="Room.RoomId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Room.CcId" class="control-label"></label>
+                <select asp-for="Room.CcId" class="form-control" asp-items="ViewBag.CcId"></select>
+                <a asp-page="/ConferenceCenters/Create" target="_blank" class="btn btn-link btn-sm">Create new Conference Center</a>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Room.Name" class="control-label"></label>
+                <input asp-for="Room.Name" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="Room.NumberOfSeats" class="control-label"></label>
+                <input asp-for="Room.NumberOfSeats" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

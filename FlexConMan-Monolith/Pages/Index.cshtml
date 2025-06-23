@@ -1,0 +1,67 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="mt-5">Welcome to Conference Manager</h1>
+    <p class="lead">Manage conferences, speakers, and attendees in one place.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Our Conference Centers</h5>
+                    <p class="card-text">View and manage upcoming events.</p>
+                    <a href="/ConferenceCenters" class="btn btn-primary">Go to ConferenceCenters</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Upcoming Conferences</h5>
+                    <p class="card-text">View and manage upcoming events.</p>
+                    <a href="/Conferences" class="btn btn-primary">Go to Conferences</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sessions</h5>
+                    <p class="card-text">See what sessions we offer.</p>
+                    <a href="/Sessions" class="btn btn-primary">Go to Sessions</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Rooms</h5>
+                    <p class="card-text">See what Rooms we have under Management.</p>
+                    <a href="/Rooms" class="btn btn-primary">Go to Rooms</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Users</h5>
+                    <p class="card-text">See what Users we have under Management.</p>
+                    <a href="/Users" class="btn btn-primary">Go to Users</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Presentations</h5>
+                    <p class="card-text">See what Presentations we have under Management.</p>
+                    <a href="/Presentations" class="btn btn-primary">Go to Presentations</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

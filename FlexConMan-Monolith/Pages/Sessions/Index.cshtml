@@ -1,0 +1,66 @@
+﻿@page
+@model FlexConMan_Monolith.Pages.Sessions.IndexModel
+
+@{
+    ViewData["Title"] = "Sessions";
+    var isUser = User.IsInRole("USER");
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!isUser)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Session[0].Datetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Session[0].Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Session[0].Conference)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Session[0].Presentation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Session) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Conference.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Presentation.Title)
+            </td>
+            <td>
+                @if (!isUser)
+                {
+                    <a asp-page="./Edit" asp-route-id="@item.SessionId">Edit</a> @:|
+                }
+                <a asp-page = "./Details" asp-route-id = "@item.SessionId" > Details </a>
+                @if (!isUser)
+                {
+                    @: |
+                    <a asp-page = "./Delete" asp-route-id = "@item.SessionId" > Delete </a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
