@@ -24,10 +24,6 @@ public class IndexModel(ApplicationDbContext context, UserManager<User> userMana
             // Check if user is in the "Admin" role
             if (user.IsInRole("ADMIN"))
             {
-                //Ticket = await _context.Tickets
-                //    .Include(t => t.Session)
-                //    .Include(t => t.User)
-                //    .ToListAsync();
                 tickets = await context.Tickets
                     .Include(t => t.User)
                     .Include(t => t.Session)
@@ -41,11 +37,6 @@ public class IndexModel(ApplicationDbContext context, UserManager<User> userMana
             {
                 // Get the current user's Id
                 var userId = userManager.GetUserId(user);
-                //Ticket = await _context.Tickets
-                //    .Include(t => t.Session)
-                //    .Include(t => t.User)
-                //    .Where(t => t.CustomerId == userId)
-                //    .ToListAsync();
                 tickets = await context.Tickets
                     .Include(t => t.User)
                     .Include(t => t.Session)
